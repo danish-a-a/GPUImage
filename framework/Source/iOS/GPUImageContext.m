@@ -28,6 +28,10 @@ static void *openGLESContextQueueKey;
 	openGLESContextQueueKey = &openGLESContextQueueKey;
     _contextQueue = dispatch_queue_create("com.sunsetlakesoftware.GPUImage.openGLESContextQueue", NULL);
 	dispatch_queue_set_specific(_contextQueue, openGLESContextQueueKey, (__bridge void *)self, NULL);
+    
+    dispatch_queue_t priorityHigh = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH,0);
+    dispatch_set_target_queue(_contextQueue,priorityHigh);
+    
     shaderProgramCache = [[NSMutableDictionary alloc] init];
     
     return self;
